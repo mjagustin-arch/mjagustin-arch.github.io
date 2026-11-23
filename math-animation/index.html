@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trigonometry Motion | Project Showcase</title>
+  <script src="https://cdn.jsdelivr.net/npm/p5@2.3.4/lib/p5.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      background-color: #f4f6f5;
+      color: #1f2933;
+      line-height: 1.65;
+    }
+    .top-bar {
+      background: linear-gradient(135deg, #134e4a 0%, #0f766e 100%);
+      color: #ffffff;
+      padding: 44px 24px;
+      border-bottom: 4px solid #f59e0b;
+    }
+    .top-bar-inner {
+      max-width: 820px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .course-tag {
+      display: inline-block;
+      width: fit-content;
+      background-color: rgba(255, 255, 255, 0.16);
+      color: #fde68a;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      padding: 4px 12px;
+      border-radius: 999px;
+      margin-bottom: 6px;
+    }
+    .top-bar h1 {
+      font-size: 1.9rem;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+    .top-bar .student-meta {
+      font-size: 1rem;
+      color: #ccfbf1;
+      font-weight: 500;
+    }
+    .container {
+      max-width: 820px;
+      margin: 30px auto 60px;
+      padding: 0 20px;
+    }
+    .overview-box {
+      background-color: #ffffff;
+      border-left: 5px solid #0f766e;
+      border-radius: 10px;
+      padding: 22px 26px;
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
+      margin-bottom: 24px;
+    }
+    .overview-box h2 {
+      font-size: 1.1rem;
+      color: #134e4a;
+      margin-bottom: 6px;
+    }
+    .overview-box p {
+      font-size: 0.94rem;
+      color: #3e4c59;
+    }
+    .project-panel {
+      background-color: #ffffff;
+      border-radius: 12px;
+      padding: 28px;
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
+    }
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid #e4e7eb;
+      margin-bottom: 22px;
+    }
+    .panel-header h2 {
+      font-size: 1.45rem;
+      color: #102a43;
+    }
+    .panel-header span {
+      font-size: 0.88rem;
+      color: #616e7c;
+      display: block;
+    }
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .btn-primary {
+      background-color: #d97706;
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 11px 20px;
+      border-radius: 8px;
+      transition: background-color 0.2s;
+    }
+    .btn-primary:hover {
+      background-color: #b45309;
+    }
+    .btn-secondary {
+      background-color: #e6fffa;
+      color: #0f766e;
+      border: 1px solid #99f6e4;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 10px 18px;
+      border-radius: 8px;
+      transition: background-color 0.2s;
+    }
+    .btn-secondary:hover {
+      background-color: #ccfbf1;
+    }
+    #canvas-holder {
+      display: flex;
+      justify-content: center;
+      margin: 0 0 22px;
+    }
+    #canvas-holder canvas {
+      display: block;
+      max-width: 100%;
+      height: auto !important;
+      border-radius: 10px;
+      border: 1px solid #e2e8f0;
+    }
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 18px;
+      margin-bottom: 22px;
+    }
+    .info-tile {
+      background-color: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 18px 20px;
+    }
+    .info-tile h3 {
+      font-size: 1rem;
+      color: #134e4a;
+      margin-bottom: 10px;
+    }
+    .info-tile ul {
+      list-style: none;
+      font-size: 0.9rem;
+      color: #334155;
+    }
+    .info-tile li {
+      margin-bottom: 8px;
+    }
+    .key-badge {
+      display: inline-block;
+      background-color: #134e4a;
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 0.78rem;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-right: 6px;
+    }
+    .info-tile p {
+      font-size: 0.9rem;
+      color: #334155;
+    }
+    .tools-footer {
+      background-color: #fefce8;
+      border: 1px solid #fde68a;
+      border-radius: 10px;
+      padding: 16px 20px;
+      font-size: 0.88rem;
+      color: #4b5563;
+    }
+    .tools-footer strong {
+      color: #92400e;
+      display: block;
+      margin-bottom: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="top-bar">
+    <div class="top-bar-inner">
+      <div class="course-tag">(GVC) IT3 FINAL DRILL &middot; P5.JS ANIMATION</div>
+      <h1>Mary Joy V. Agustin</h1>
+      <div class="student-meta">BSIT 2-A &bull; Mathematical Animation Portfolio</div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="overview-box">
+      <h2>Project Overview</h2>
+      <p>
+        This webpage presents an interactive mathematical animation built with the p5.js JavaScript library. Using angles, sine waves, and unit circle trigonometry, a geometric triangle continuously pulses and rotates smoothly across the canvas.
+      </p>
+    </section>
+
+    <section class="project-panel">
+      <div class="panel-header">
+        <div>
+          <h2>Trigonometry Motion</h2>
+          <span>Pulsing &amp; Rotating Triangle in p5.js</span>
+        </div>
+        <div class="actions">
+          <a href="github insert link" class="btn-primary">View My Animation</a>
+          <a href="video insert link" target="_blank" rel="noopener" class="btn-secondary">Video Explanation</a>
+        </div>
+      </div>
+
+      <div id="canvas-holder"></div>
+
+      <div class="info-grid">
+        <div class="info-tile">
+          <h3>Interactive Controls</h3>
+          <ul>
+            <li><span class="key-badge">P</span> Pause or resume the animation</li>
+            <li><span class="key-badge">W</span> Increase rotation speed</li>
+            <li><span class="key-badge">S</span> Decrease rotation speed</li>
+          </ul>
+        </div>
+
+        <div class="info-tile">
+          <h3>Mathematical Concepts</h3>
+          <p>
+            The triangle's pulsing size uses a sine wave (<code>radius = 120 + 30 * sin(angle * 2)</code>), while its three vertices are positioned 120&deg; (<code>TWO_PI / 3</code>) apart using <code>cos()</code> and <code>sin()</code> as the angle updates every frame.
+          </p>
+        </div>
+      </div>
+
+      <div class="tools-footer">
+        <strong>Sources &amp; Tools Acknowledgment</strong>
+        Built using the <b>p5.js</b> library for rendering mathematical geometry and animation, with code and layout structuring assistance from <b>Gemini AI</b>.
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Trigonometry Motion — pulsing, rotating triangle.
+    // P = pause/resume, W = faster, S = slower.
+
+    let angle = 0;
+    let speed = 0.02;
+    let paused = false;
+
+    function setup() {
+      const holder = document.getElementById('canvas-holder');
+      const w = Math.min(holder.clientWidth || 600, 600);
+      const c = createCanvas(w, w * 0.75);
+      c.parent(holder);
+      angleMode(RADIANS);
+    }
+
+    function draw() {
+      background(244, 246, 245);
+
+      if (!paused) angle += speed;
+
+      const cx = width / 2;
+      const cy = height / 2;
+      const radius = 120 + 30 * sin(angle * 2);   // pulsing size
+
+      // three vertices, 120 degrees (TWO_PI / 3) apart
+      const pts = [];
+      for (let i = 0; i < 3; i++) {
+        const a = angle + (TWO_PI / 3) * i;
+        pts.push({ x: cx + radius * cos(a), y: cy + radius * sin(a) });
+      }
+
+      // triangle
+      fill(15, 118, 110, 60);
+      stroke(15, 118, 110);
+      strokeWeight(3);
+      triangle(pts[0].x, pts[0].y, pts[1].x, pts[1].y, pts[2].x, pts[2].y);
+
+      // vertices
+      noStroke();
+      fill(217, 119, 6);
+      for (const p of pts) circle(p.x, p.y, 14);
+
+      // centre dot
+      fill(19, 78, 74);
+      circle(cx, cy, 8);
+
+      // readout
+      fill(62, 76, 89);
+      textSize(14);
+      textAlign(LEFT, TOP);
+      text('speed: ' + speed.toFixed(3) + (paused ? '  (paused)' : ''), 16, 16);
+    }
+
+    function keyPressed() {
+      if (key === 'p' || key === 'P') paused = !paused;
+      if (key === 'w' || key === 'W') speed = min(speed + 0.005, 0.2);
+      if (key === 's' || key === 'S') speed = max(speed - 0.005, 0);
+    }
+
+    function windowResized() {
+      const holder = document.getElementById('canvas-holder');
+      const w = Math.min(holder.clientWidth || 600, 600);
+      resizeCanvas(w, w * 0.75);
+    }
+  </script>
+
+</body>
+</html>
