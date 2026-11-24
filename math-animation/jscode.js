@@ -13,7 +13,12 @@ function draw() {
   noStroke();
   textSize(14);
   text("Controls: [P] Pause  |  [W] Faster  |  [S] Slower", 20, 20);
-  text("Speed: " + speed.toFixed(2), 20, 55);
+
+  text("Speed: " + speed.toFixed(2) + (isPaused ? "  [PAUSED]" : ""), 20, 50);
+  
+  let deg = degrees(angle) % 360;
+  text("Angle: " + angle.toFixed(2) + " rad (" + deg.toFixed(0) + "°)", 20, 75);
+ 
 
  
   translate(width / 2, height / 2);
